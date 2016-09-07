@@ -1,0 +1,37 @@
+{
+  "session": {
+    "sessionId": "SessionId.d7503754-4c9b-4b65-9cab-d75213fc9588",
+    "application": {
+      "applicationId": "amzn1.ask.skill.55ae683e-0f28-442f-b1e3-175ef28b5ecb"
+    },
+    "attributes": {},
+    "user": {
+      "userId": "amzn1.ask.account.AFP3ZWPOS2BGJR7OWJZ3DHPKMOMKTLFMOJEWRISWHRVJWUUHGIHTYPR3M6EHBVGX2INBCHNKSRAZ5JBR3DO6QRPM6IIF33T73QA2P3F2I7LGRGZHOITL4UJUJES7PNYC5EFZPVMZGH3FHY5PUTFSKBZCLS6XX5YTDKMU7TJEW6RHXWDSR7LZ4HAT7PF6FJ7CA5N54OMEZUYY2MQ"
+    },
+    "new": true
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.cbb05ca2-54e7-4891-a8f0-009fcee85b22",
+    "locale": "en-US",
+    "timestamp": "2016-09-07T06:02:59Z",
+    "intent": {
+      "name": "SetSpiceLocation",
+      "slots": {
+        "spice": {
+          "name": "spice",
+          "value": "cumin"
+        },
+        "column": {
+          "name": "column",
+          "value": "5"
+        },
+        "row": {
+          "name": "row",
+          "value": "2"
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
