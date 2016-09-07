@@ -109,7 +109,6 @@ def set_spice_location(intent):
         column = intent["slots"]["column"]["value"]
     if spice_name != "" and row != 0 and column != 0:
         speech_output = "The " + spice_name + " is on row " + row + ", column " + column + ". "
-        print(speech_output)
 
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
