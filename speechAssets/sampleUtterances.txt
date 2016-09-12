@@ -1,3 +1,4 @@
+GetSpiceLocation for {spice}
 GetSpiceLocation the {spice}
 GetSpiceLocation the location of the {spice}
 GetSpiceLocation the location of {spice}
@@ -11,7 +12,11 @@ GetSpiceLocation where should I put the {spice}
 GetSpiceLocation where do I put the {spice}
 GetSpiceLocation where do I set the {spice}
 GetSpiceLocation tell me where the {spice} is
+GetSpiceLocation I need the {spice}
 
+GetSpiceLocation {spice}
+
+SetSpiceLocation the {spice} is the {column} jar on row {row}
 SetSpiceLocation the {spice} is in row {row} column {column}
 SetSpiceLocation the {spice} is in column {column} row {row}
 SetSpiceLocation the next spice is {spice}

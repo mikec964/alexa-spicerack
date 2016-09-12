@@ -5,10 +5,13 @@
 
 from __future__ import print_function
 import json
+import boto3
 
 APP_ID = "amzn1.ask.skill.55ae683e-0f28-442f-b1e3-175ef28b5ecb" # Set APP_ID to ensure only your skill calls this lambda handler
 SKILL_NAME = "Spice Rack Locator"
 SKILL_INVOKE = "Spice Rack"
+DB_TABLENAME = "spicerackmap"
+DB_REGION = "us-west-1"
 
 
 def lambda_handler(event, context):
@@ -18,7 +21,7 @@ def lambda_handler(event, context):
         if (APP_ID != ""):
             if (event["session"]["application"]["applicationId"] != APP_ID):
                 raise ValueError("Invalid Application ID", event["session"]["application"]["applicationId"],APP_ID)
-    
+
     if event["session"]["new"]:
         on_session_started({"requestId": event["request"]["requestId"]}, event["session"])
 
@@ -65,20 +68,22 @@ def on_intent(intent_request, session):
 
 
 def launch_response():
+    """ No intent. Provide help."""
+
     session_attributes = {}
     card_title = SKILL_NAME
     speech_output = "Welcome to " + SKILL_NAME + ". \n" \
                     "Try: Tell " + SKILL_INVOKE + " the cumin is on row 2, column 4. " \
                     "Or try: Ask " + SKILL_INVOKE + " for the cumin."
-    reprompt_text = ""
-    should_end_session = True
+    reprompt_text = "Tell me where the first bottle is."
+    should_end_session = False
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
 
 
 def get_spice_location(intent):
     session_attributes = {}
-    card_title = SKILL_NAME
+    card_title = "" # no card
     speech_output = ""
     reprompt_text = ""
     should_end_session = True
@@ -93,7 +98,7 @@ def get_spice_location(intent):
 
 def set_spice_location(intent):
     session_attributes = {}
-    card_title = "Set Spice Location"
+    card_title = "" # no card
     speech_output = ""
     reprompt_text = ""
     should_end_session = True
@@ -117,8 +122,8 @@ def set_spice_location(intent):
 def handle_session_end_request():
     """ Requested Cancel or Stop """
 
-    card_title = SKILL_NAME + " - Thanks"
-    speech_output = "See you next time!"
+    card_title = "" # no card
+    speech_output = "Thanks for using " + SKILL_NAME + "."
     should_end_session = True
 
     return build_response({}, build_speechlet_response(card_title, speech_output, None, should_end_session))
