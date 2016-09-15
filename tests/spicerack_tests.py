@@ -19,33 +19,38 @@ import json
 # python -m unittest discover -p '*tests.py'
 
 class test_database(unittest.TestCase):
-    """ Test database functions """
+    """Test database functions"""
 
-    spiceName = "Tumeric"
-    spiceRow = "2"
-    spiceColumn = "5"
+    def setUp(self):
+        pass
 
     def test_table_exists(self):
+        """Should create table if none exists"""
         srack.get_table()
 
-    @unittest.skip("Not written")
     def test_store_spice(self):
         spiceName = "Tumeric"
-        spiceLocation = ""
+        spiceLocation = "None"
         spiceRow = "2"
         spiceColumn = "5"
         srack.store_spice(spiceName, spiceLocation, spiceRow, spiceColumn)
 
-    @unittest.skip("Not written")
     def test_recall_spice(self):
         spiceName = "Tumeric"
+        spiceLocation = "None"
+        spiceRow = "2"
+        spiceColumn = "5"
         result = srack.recall_spice(spiceName)
-        print res
-
+        # print(result)
+        # print(result['spiceLocation'])
+        self.assertEqual(result['spiceName'], spiceName)
+        self.assertEqual(result['spiceLocation'], spiceLocation)
+        self.assertEqual(result['spiceRow'], spiceRow)
+        self.assertEqual(result['spiceColumn'], spiceColumn)
 
 
 class test_lambda(unittest.TestCase):
-    """ Test lamda handler and basic overhead """
+    """Test lamda handler and basic overhead"""
 
     def test_lambda_handler(self):
         json_data = open('launch.json').read()
@@ -59,7 +64,7 @@ class test_lambda(unittest.TestCase):
     #def test_on_intent(self):
 
 class test_spicerack(unittest.TestCase):
-    """ Test functions specific to spicerack """
+    """Test functions specific to spicerack"""
 
     def test_launch_response(self):
         response = srack.launch_response()
