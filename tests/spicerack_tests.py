@@ -21,6 +21,28 @@ import json
 class test_database(unittest.TestCase):
     """ Test database functions """
 
+    spiceName = "Tumeric"
+    spiceRow = "2"
+    spiceColumn = "5"
+
+    def test_table_exists(self):
+        srack.get_table()
+
+    @unittest.skip("Not written")
+    def test_store_spice(self):
+        spiceName = "Tumeric"
+        spiceLocation = ""
+        spiceRow = "2"
+        spiceColumn = "5"
+        srack.store_spice(spiceName, spiceLocation, spiceRow, spiceColumn)
+
+    @unittest.skip("Not written")
+    def test_recall_spice(self):
+        spiceName = "Tumeric"
+        result = srack.recall_spice(spiceName)
+        print res
+
+
 
 class test_lambda(unittest.TestCase):
     """ Test lamda handler and basic overhead """
