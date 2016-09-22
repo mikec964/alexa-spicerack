@@ -3,21 +3,27 @@
 # Spice Rack Locator
 # Let Alexa help you find the spices you own.
 
-from __future__ import print_function
+from __future__ import print_function # python3 printing
 import json
 import boto3
 
-APP_ID = "amzn1.ask.skill.55ae683e-0f28-442f-b1e3-175ef28b5ecb" # Set APP_ID to ensure only your skill calls this lambda handler
+# Set APP_ID to ensure only your skill calls this lambda handler
+APP_ID = "amzn1.ask.skill.55ae683e-0f28-442f-b1e3-175ef28b5ecb" 
 SKILL_NAME = "Spice Rack Locator"
 SKILL_INVOKE = "Spice Rack"
 DB_TABLENAME = "spicerack-map"
 DB_REGION = "us-west-1"
+# DB_URL = "https://dynamodb." + DB_REGION + ".amazonaws.com"
+DB_URL = "http://localhost:8000"
 
 
 def lambda_handler(event, context):
-    """Returns a JSON response to Alexa with: outputSpeech, reprompt, card, shouldEndSession """
+    """Returns a JSON response to Alexa
 
-    if (event["session"]["application"]["applicationId"] != 'amzn1.echo-sdk-ams.app.[unique-value-here]'):
+    Includes: outputSpeech, reprompt, card, shouldEndSession"""
+
+    if (event["session"]["application"]["applicationId"] 
+            != 'amzn1.echo-sdk-ams.app.[unique-value-here]'):
         if (APP_ID != ""):
             if (event["session"]["application"]["applicationId"] != APP_ID):
                 raise ValueError("Invalid Application ID", event["session"]["application"]["applicationId"],APP_ID)
@@ -46,7 +52,9 @@ def on_launch(launch_request, session):
 
 
 def on_intent(intent_request, session):
-    """Skill launched with intent. Get intent from JSON and call appropriate function """
+    """Skill launched with intent.
+
+    Get intent from JSON and call appropriate function """
 
     print("Determining intent.")
     intent = intent_request["intent"]
@@ -73,7 +81,7 @@ def launch_response():
                     "Try: Tell " + SKILL_INVOKE + " the cumin is on row 2, column 4. " \
                     "Or try: Ask " + SKILL_INVOKE + " for the cumin."
     reprompt_text = "Tell me where the first bottle is."
-    should_end_session = False
+    should_end_session = True
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
 
@@ -87,9 +95,10 @@ def get_spice_location(intent):
 
     if "spice" in intent["slots"]:
         spice_name = intent["slots"]["spice"]["value"]
-        speech_output = "The " + spice_name + " is on the shelf."
-
-    return build_response(session_attributes, build_speechlet_response(
+        spice = recall_spice(spice_name)
+        speech_output = "The " + spice_name + " is on row " + spice['spiceRow'] + ", column " + spice['spiceColumn'] + "."
+        # print(speech_output)
+        return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
 
 
@@ -101,6 +110,7 @@ def set_spice_location(intent):
     should_end_session = True
 
     spice_name = ""
+    location = "None"
     row = 0
     column = 0
     if "spice" in intent["slots"]:
@@ -110,6 +120,7 @@ def set_spice_location(intent):
     if "column" in intent["slots"]:
         column = intent["slots"]["column"]["value"]
     if spice_name != "" and row != 0 and column != 0:
+        store_spice(spice_name, location, row, column)
         speech_output = "The " + spice_name + " is on row " + row + ", column " + column + ". "
 
     return build_response(session_attributes, build_speechlet_response(
@@ -130,14 +141,15 @@ def get_table():
     """Create table if it doesn't exist """
 
     try:
-        client = boto3.client('dynamodb')
+        client = boto3.client('dynamodb', endpoint_url=DB_URL)
         response = client.describe_table(TableName = DB_TABLENAME)
         # parsed = json.loads(response)
         # print(json.dumps(parsed, indent=4, sort_keys=True))
         # print(response)
     except Exception, e:
         print(e)
-        dynamodb = boto3.resource('dynamodb')
+        print("Creating new table")
+        dynamodb = boto3.resource('dynamodb', endpoint_url=DB_URL)
         table = dynamodb.create_table(
             TableName = DB_TABLENAME,
             KeySchema=[
@@ -151,18 +163,16 @@ def get_table():
                 "WriteCapacityUnits": 5
             }
         )
-        table.meta.client.get_waiter('table_exists').wait(TableName=DB_TABLENAME) # Might take 20 seconds locally!
+        # get_waiter might take 20 seconds locally!
+        table.meta.client.get_waiter('table_exists').wait(TableName=DB_TABLENAME) 
 
 
 def store_spice(spiceName, spiceLocation, spiceRow, spiceColumn):
     """Store spice location in db """
 
+    # userID = event["session"]["user"]["userId"]
     try:
-        client = boto3.client('dynamodb')
-        response = dynamodb.describeTable(DB_TABLENAME)
-        print (response)
-    except Exception, e:
-        dynamodb = boto3.resource('dynamodb')
+        dynamodb = boto3.resource('dynamodb', endpoint_url=DB_URL)
         table = dynamodb.Table(DB_TABLENAME)
         table.put_item(
             Item = {
@@ -172,19 +182,20 @@ def store_spice(spiceName, spiceLocation, spiceRow, spiceColumn):
                 "spiceColumn": spiceColumn,
             }
         )
-
+    except Exception, e:
+        raise
 
 def recall_spice(spiceName):
     """Recall spice location from db """
 
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = boto3.resource('dynamodb', endpoint_url=DB_URL)
     table = dynamodb.Table(DB_TABLENAME)
     try:
         response = table.get_item(
-        Key = {
-            'spiceName': spiceName
-        }
-    )
+            Key = {
+                'spiceName': spiceName
+            }
+        )
         item = response['Item']
     except Exception, e:
         raise

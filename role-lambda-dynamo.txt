@@ -1,0 +1,64 @@
+role: alexa-dynamodb
+managed policies: AWSLambdaBasicExecutionRole, AmazonDynamoDBFullAccess
+
+policy: AWSLambdaBasicExecutionRole
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "arn:aws:logs:*:*:*"
+    }
+  ]
+}
+
+policy: AmazonDynamoDBFullAccess
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "dynamodb:*",
+        "cloudwatch:DeleteAlarms",
+        "cloudwatch:DescribeAlarmHistory",
+        "cloudwatch:DescribeAlarms",
+        "cloudwatch:DescribeAlarmsForMetric",
+        "cloudwatch:GetMetricStatistics",
+        "cloudwatch:ListMetrics",
+        "cloudwatch:PutMetricAlarm",
+        "datapipeline:ActivatePipeline",
+        "datapipeline:CreatePipeline",
+        "datapipeline:DeletePipeline",
+        "datapipeline:DescribeObjects",
+        "datapipeline:DescribePipelines",
+        "datapipeline:GetPipelineDefinition",
+        "datapipeline:ListPipelines",
+        "datapipeline:PutPipelineDefinition",
+        "datapipeline:QueryObjects",
+        "iam:ListRoles",
+        "sns:CreateTopic",
+        "sns:DeleteTopic",
+        "sns:ListSubscriptions",
+        "sns:ListSubscriptionsByTopic",
+        "sns:ListTopics",
+        "sns:Subscribe",
+        "sns:Unsubscribe",
+        "sns:SetTopicAttributes",
+        "lambda:CreateFunction",
+        "lambda:ListFunctions",
+        "lambda:ListEventSourceMappings",
+        "lambda:CreateEventSourceMapping",
+        "lambda:DeleteEventSourceMapping",
+        "lambda:GetFunctionConfiguration",
+        "lambda:DeleteFunction"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}

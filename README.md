@@ -1,23 +1,75 @@
-# Spicerack
-This project helps you find spice bottles and put them back in the right place through speech and lights.
+# Spice Rack
+This project creates an Amazon Alexa voice skill that helps you quickly locate
+a particular spice in a crowded spice cabinet. You can use your voice to ask
+"Where is the cinnamon?" and it will tell you the row and column of the spice.
 
-## Introduction
+There is a second, optional level of functionality planned, but not yet 
+implemented. If used with a physical spice rack enhanced with a Raspberry Pi, 
+it will turn on a light above the spice bottle.
 
-This project helps you quickly locate a particular spice in a crowded spice cabinet. You can use your voice to ask “Where is the cinnamon?” and it will tell you the shelf and row of the spice.
+## Use Cases
+* Tell SR the location of a spice
+* Tell SR the location of each spice in the rack
+* Remove a spice from the rack
+* Ask SR the location of a spice
+* Ask SR the locations of several spice
 
-There is a second, optional level of functionality. If the spice rack is registered, it will turn on a light above the spice bottle’s location.
+# Installation
+If you want to use the skill on your Amazon Echo or other Alexa-enabled
+device:
+* Say, "Alexa, install the Spice Finder skill"
+* On your phone, you can use the Alexa app.
+* On your computer, you can go to https://alexa.amazon.com 
+ 
+Say "Alexa, run Spice Finder" to verify that is has been installed.
 
-## About the code
+# Installation For Program Modification
+If you want to install the source code in your Amazon developer account
+and make changes to it, you must install the Alexa skill and the Lambda 
+function.
 
-This is written in Python.
+These instructions are so bare bones they are more like a check list. This
+short tutorial video might help fill in the blanks.
+https://www.youtube.com/watch?v=zt9WdE5kR6g 
 
-* It's not (yet) in the format that can be zipped and uploaded to Amazon.
-* The tests don't actually work yet.
+## Lambda Function Setup
+1. Go to https://console.aws.amazon.com and select Lambda.
+2. Click "Create a Lambda Function"
+3. On the "Select blueprint" page, click "Skip"
+4. On the "Configure triggers" page, click the empty box and select "Alexa
+Skills Kit"
+5. On the "Configure Function" page:
+    - Name: pySpiceRack
+    - Description: Locates spice
+    - Runtime: Python 2.7
+    - Handler: lambda_function.lambda_handler
+    - Code entry type: Edit code inline
+    - Code: Copy in the spicerack.py file
+    - Role: Existing role, alexa-dynamodb
+6. On the "Review page" click "Create function"
+7. Make note of the ARN at the top right.
 
-### Features
+## Alexa Skill Setup
+Go to https://developer.amazon.com/edw/home.html#/skills/list and create a new
+skill. Fill in three pages:
 
-* It should access a DB to remember spice locations from one session to the next, for each user
-* It should register and connect to the Raspberry Pi.
-* The RPi should turn on the appropriate light
+### Skill Information
+* Skill type: Custom integration model
+* Name: Spice Finder
+* Invocation name: Spice Finder
+* Audio player: No
 
+### Interaction Model
+From the speechAssets folder, copy intentSchema.json, 
+customSlotTypes/LIST_OF_SPICES.txt, and sampleUtterances.txt into their
+respective fields.
 
+### Configuration
+1.  Enter the ARN of the lambda function you created before.
+2.  Select "North America".
+
+# Latest Version
+Found at https://github.com/mikec964/alexa-spicerack 
+
+# Licensing
+See the file called LICENSE.

@@ -28,6 +28,7 @@ class test_database(unittest.TestCase):
         """Should create table if none exists"""
         srack.get_table()
 
+    # @unittest.skip("not yet")
     def test_store_spice(self):
         spiceName = "Tumeric"
         spiceLocation = "None"
@@ -35,6 +36,7 @@ class test_database(unittest.TestCase):
         spiceColumn = "5"
         srack.store_spice(spiceName, spiceLocation, spiceRow, spiceColumn)
 
+    # @unittest.skip("not yet")
     def test_recall_spice(self):
         spiceName = "Tumeric"
         spiceLocation = "None"
@@ -63,6 +65,7 @@ class test_lambda(unittest.TestCase):
     #def test_on_launch(self):
     #def test_on_intent(self):
 
+# @unittest.skip("skip spicerack")
 class test_spicerack(unittest.TestCase):
     """Test functions specific to spicerack"""
 
