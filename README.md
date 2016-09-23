@@ -14,7 +14,7 @@ it will turn on a light above the spice bottle.
 * Ask SR the location of a spice
 * Ask SR the locations of several spice
 
-# Installation
+## Installation
 If you want to use the skill on your Amazon Echo or other Alexa-enabled
 device:
 * Say, "Alexa, install the Spice Finder skill"
@@ -23,7 +23,7 @@ device:
  
 Say "Alexa, run Spice Finder" to verify that is has been installed.
 
-# Installation For Program Modification
+## Installation For Program Modification
 If you want to install the source code in your Amazon developer account
 and make changes to it, you must install the Alexa skill and the Lambda 
 function.
@@ -32,7 +32,7 @@ These instructions are so bare bones they are more like a check list. This
 short tutorial video might help fill in the blanks.
 https://www.youtube.com/watch?v=zt9WdE5kR6g 
 
-## Lambda Function Setup
+### Lambda Function Setup
 1. Go to https://console.aws.amazon.com and select Lambda.
 2. Click "Create a Lambda Function"
 3. On the "Select blueprint" page, click "Skip"
@@ -49,27 +49,27 @@ Skills Kit"
 6. On the "Review page" click "Create function"
 7. Make note of the ARN at the top right.
 
-## Alexa Skill Setup
+### Alexa Skill Setup
 Go to https://developer.amazon.com/edw/home.html#/skills/list and create a new
 skill. Fill in three pages:
 
-### Skill Information
+#### Skill Information
 * Skill type: Custom integration model
 * Name: Spice Finder
 * Invocation name: Spice Finder
 * Audio player: No
 
-### Interaction Model
+#### Interaction Model
 From the speechAssets folder, copy intentSchema.json, 
 customSlotTypes/LIST_OF_SPICES.txt, and sampleUtterances.txt into their
 respective fields.
 
-### Configuration
+#### Configuration
 1.  Enter the ARN of the lambda function you created before.
 2.  Select "North America".
 
-# Latest Version
+## Latest Version
 Found at https://github.com/mikec964/alexa-spicerack 
 
-# Licensing
+## Licensing
 See the file called LICENSE.
