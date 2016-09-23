@@ -16,9 +16,17 @@ GetSpiceLocation I need the {spice}
 
 GetSpiceLocation {spice}
 
+SetSpiceLocation the {spice} is the {column} bottle on row {row}
+SetSpiceLocation the {spice} is the {column} column on row {row}
 SetSpiceLocation the {spice} is the {column} jar on row {row}
+SetSpiceLocation the {spice} is in row {row} bottle {column}
 SetSpiceLocation the {spice} is in row {row} column {column}
+SetSpiceLocation the {spice} is in row {row} jar {column}
+SetSpiceLocation the {spice} is in bottle {column} row {row}
 SetSpiceLocation the {spice} is in column {column} row {row}
+SetSpiceLocation the {spice} is in jar {column} row {row}
+SetSpiceLocation the next bottle is {spice}
+SetSpiceLocation the next jar is {spice}
 SetSpiceLocation the next spice is {spice}
 SetSpiceLocation the next is {spice}
 SetSpiceLocation {spice} is in row {row} column {column}
@@ -27,8 +35,9 @@ SetSpiceLocation next spice is {spice}
 SetSpiceLocation next is {spice}
 
 SetSpiceLocationRow next row
-SetSpiceLocationColumn next column
 SetSpiceLocationColumn next bottle
+SetSpiceLocationColumn next column
+SetSpiceLocationColumn next jar
 SetSpiceLocationColumn next spice
 
 Help help
