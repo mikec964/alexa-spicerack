@@ -11,7 +11,7 @@ import boto3
 APP_ID = "amzn1.ask.skill.55ae683e-0f28-442f-b1e3-175ef28b5ecb" 
 SKILL_NAME = "Spice Rack Locator"
 SKILL_INVOKE = "Spice Rack"
-DB_TABLENAME = "spice4"
+DB_TABLENAME = "spice-map"
 DB_REGION = "us-east-1"
 # DB_URL = "https://dynamodb." + DB_REGION + ".amazonaws.com"
 DB_URL = "http://localhost:8000"
