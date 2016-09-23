@@ -22,27 +22,18 @@ class test_database(unittest.TestCase):
     """Test database functions"""
 
     def setUp(self):
-        pass
-
-    def test_table_exists(self):
-        """Should create table if none exists"""
+        """Create table if none exists"""
         srack.get_table()
 
     # @unittest.skip("not yet")
-    def test_store_spice(self):
-        spiceName = "Tumeric"
-        spiceLocation = "None"
-        spiceRow = "2"
-        spiceColumn = "5"
-        srack.store_spice(spiceName, spiceLocation, spiceRow, spiceColumn)
-
-    # @unittest.skip("not yet")
     def test_recall_spice(self):
+        user_id = "amzn1.ask.account.AFP3ZWPOS2BGJR7OWJZ3DHPKMOMKTLFMOJEWRISWHRVJWUUHGIHTYPR3M6EHBVGX2INBCHNKSRAZ5JBR3DO6QRPM6IIF33T73QA2P3F2I7LGRGZHOITL4UJUJES7PNYC5EFZPVMZGH3FHY5PUTFSKBZCLS6XX5YTDKMU7TJEW6RHXWDSR7LZ4HAT7PF6FJ7CA5N54OMEZUYY2MQ"
         spiceName = "Tumeric"
         spiceLocation = "None"
-        spiceRow = "2"
-        spiceColumn = "5"
-        result = srack.recall_spice(spiceName)
+        spiceRow = "1"
+        spiceColumn = "6"
+        srack.store_spice(user_id, spiceName, spiceLocation, spiceRow, spiceColumn)
+        result = srack.recall_spice(user_id, spiceName)
         # print(result)
         # print(result['spiceLocation'])
         self.assertEqual(result['spiceName'], spiceName)
@@ -74,15 +65,17 @@ class test_spicerack(unittest.TestCase):
         pass
 
     def test_get_spice_location(self):
+        user_id = "amzn1.ask.account.AFP3ZWPOS2BGJR7OWJZ3DHPKMOMKTLFMOJEWRISWHRVJWUUHGIHTYPR3M6EHBVGX2INBCHNKSRAZ5JBR3DO6QRPM6IIF33T73QA2P3F2I7LGRGZHOITL4UJUJES7PNYC5EFZPVMZGH3FHY5PUTFSKBZCLS6XX5YTDKMU7TJEW6RHXWDSR7LZ4HAT7PF6FJ7CA5N54OMEZUYY2MQ"
         json_data = open('intent-getSpiceLocation.json').read()
         intent = json.loads(json_data)["request"]["intent"]
-        response = srack.get_spice_location(intent)
+        response = srack.get_spice_location(user_id, intent)
         pass
 
     def test_set_spice_location(self):
+        user_id = "amzn1.ask.account.AFP3ZWPOS2BGJR7OWJZ3DHPKMOMKTLFMOJEWRISWHRVJWUUHGIHTYPR3M6EHBVGX2INBCHNKSRAZ5JBR3DO6QRPM6IIF33T73QA2P3F2I7LGRGZHOITL4UJUJES7PNYC5EFZPVMZGH3FHY5PUTFSKBZCLS6XX5YTDKMU7TJEW6RHXWDSR7LZ4HAT7PF6FJ7CA5N54OMEZUYY2MQ"
         json_data = open('intent-setSpiceLocation.json').read()
         intent = json.loads(json_data)["request"]["intent"]
-        response = srack.set_spice_location(intent)
+        response = srack.set_spice_location(user_id, intent)
         pass
 
 
